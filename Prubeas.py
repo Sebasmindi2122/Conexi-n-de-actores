@@ -3,7 +3,7 @@ import sys
 
 # Agrega las clases Node, StackFrontier y QueueFrontier de util.py
 # Asegúrate de que util.py esté en el mismo directorio o en un directorio accesible
-from util import Node, StackFrontier, QueueFrontier
+from util import Node, QueueFrontier
 
 # Maps names to a set of corresponding person_ids
 names = {}
