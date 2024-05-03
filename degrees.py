@@ -92,6 +92,7 @@ def shortest_path(source, target):
     """
     stars_cmpsc = neighbors_for_person(source)
     stars_comptg = neighbors_for_person(target)
+    
 
 
 
