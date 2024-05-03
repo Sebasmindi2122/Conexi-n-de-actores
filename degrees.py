@@ -83,7 +83,7 @@ def main():
             movie = movies[path[i + 1][0]]["title"]
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
-
+str_Compartersc = []
 def shortest_path(source, target):
     """
     Returns the shortest list of (movie_id, person_id) pairs
@@ -91,10 +91,10 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
+    str_Compartersc = neighbors_for_person(source)
+    str_Comparterth = neighbors_for_person(target)
     
 
-    # TODO
-    raise NotImplementedError
 
 
 def person_id_for_name(name):
