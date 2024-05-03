@@ -1,6 +1,8 @@
 import csv
 import sys
 
+# Agrega las clases Node, StackFrontier y QueueFrontier de util.py
+# Asegúrate de que util.py esté en el mismo directorio o en un directorio accesible
 from util import Node, StackFrontier, QueueFrontier
 
 # Maps names to a set of corresponding person_ids
@@ -11,10 +13,10 @@ people = {}
 
 # Maps movie_ids to a dictionary of: title, year, stars (a set of person_ids)
 movies = {}
-directory = "/home/ubuntu/Conexi-n-de-actores/small"
 
+directory = "/home/ubuntu/Conexi-n-de-actores/large"
 
-# Load people
+# Load data from CSV files into memory
 with open(f"{directory}/people.csv", encoding="utf-8") as f:
     reader = csv.DictReader(f)
     for row in reader:
@@ -48,16 +50,6 @@ with open(f"{directory}/stars.csv", encoding="utf-8") as f:
         except KeyError:
             pass
 
-person1 = "marlon brando"
-person2 = "john gielgud"
-source = person_id_for_name(person1)
-if source is None:
-    sys.exit("Person not found.")
-target = person_id_for_name(person2)
-if target is None:
-    sys.exit("Person not found.")
-
-
 def person_id_for_name(name):
     """
     Returns the IMDB id for a person's name,
@@ -83,7 +75,6 @@ def person_id_for_name(name):
     else:
         return person_ids[0]
 
-
 def neighbors_for_person(person_id):
     """
     Returns (movie_id, person_id) pairs for people
@@ -96,9 +87,14 @@ def neighbors_for_person(person_id):
             neighbors.add((movie_id, person_id))
     return neighbors
 
-
-
-
+person1 = "marlon brando"
+person2 = "john gielgud"
+source = person_id_for_name(person1)
+if source is None:
+    sys.exit("Person not found.")
+target = person_id_for_name(person2)
+if target is None:
+    sys.exit("Person not found.")
 
 # Crear el nodo inicial con el actor fuente
 start = Node(state=source, parent=None, action=None)
@@ -109,7 +105,8 @@ frontier.add(start)
 
 # Inicializar un conjunto para mantener un registro de los nodos explorados
 explored = set()
-path = 0
+path = None
+
 # Iterar hasta que la frontera esté vacía
 while not frontier.empty():
     # Extraer un nodo de la frontera
@@ -122,7 +119,7 @@ while not frontier.empty():
             path.append((node.action, node.state))
             node = node.parent
         path.reverse()
-
+        break  # Salir del bucle mientras
 
     # Agregar el nodo al conjunto de nodos explorados
     explored.add(node.state)
@@ -137,8 +134,6 @@ while not frontier.empty():
             frontier.add(child)
 
 # Si no se encuentra ningún camino posible
-
-
 if path is None:
     print("Not connected.")
 else:
@@ -150,4 +145,3 @@ else:
         person2 = people[path[i + 1][1]]["name"]
         movie = movies[path[i + 1][0]]["title"]
         print(f"{i + 1}: {person1} and {person2} starred in {movie}")
-
