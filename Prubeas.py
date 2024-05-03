@@ -27,4 +27,5 @@ with open(f"{directory}/people.csv", encoding="utf-8") as f:
         else:
             names[row["name"].lower()].add(row["id"])
 
-print(people)
+print(names)
+
