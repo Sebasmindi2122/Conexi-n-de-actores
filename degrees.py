@@ -92,19 +92,15 @@ def shortest_path(source, target):
     """
     # Crear el nodo inicial con el actor fuente
     start = Node(state=source, parent=None, action=None)
-
     # Inicializar la frontera con el nodo inicial
     frontier = QueueFrontier()
     frontier.add(start)
-
     # Inicializar un conjunto para mantener un registro de los nodos explorados
     explored = set()
-
     # Iterar hasta que la frontera esté vacía
     while not frontier.empty():
         # Extraer un nodo de la frontera
         node = frontier.remove()
-
         # Si el nodo es el objetivo, reconstruir y devolver el camino
         if node.state == target:
             path = []

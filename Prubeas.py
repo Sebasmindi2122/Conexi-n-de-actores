@@ -95,22 +95,17 @@ def shortest_path(source, target):
     """
     # Crear el nodo inicial con el actor fuente
     start = Node(state=source, parent=None, action=None)
-
     # Inicializar la frontera con el nodo inicial
     frontier = QueueFrontier()
     frontier.add(start)
-
     # Inicializar un conjunto para mantener un registro de los nodos explorados
     explored = set()
-
     # Inicializar una lista para almacenar los caminos de longitud mínima
     shortest_paths = []
-
     # Iterar hasta que la frontera esté vacía
     while not frontier.empty():
         # Extraer un nodo de la frontera
         node = frontier.remove()
-
         # Si el nodo es el objetivo, reconstruir el camino y agregarlo a la lista de caminos mínimos
         if node.state == target:
             path = []
@@ -119,19 +114,15 @@ def shortest_path(source, target):
                 node = node.parent
             path.reverse()
             shortest_paths.append(path)
-
         # Agregar el nodo al conjunto de nodos explorados
         explored.add(node.state)
-
         # Obtener los vecinos del nodo actual
         neighbors = neighbors_for_person(node.state)
-
         # Agregar vecinos no explorados a la frontera
         for movie_id, neighbor_person_id in neighbors:
             if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
                 child = Node(state=neighbor_person_id, parent=node, action=movie_id)
                 frontier.add(child)
-
     # Si se encontraron caminos de longitud mínima, devolver uno de ellos al azar
     if shortest_paths:
         return random.choice(shortest_paths)
