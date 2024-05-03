@@ -50,19 +50,13 @@ with open(f"{directory}/stars.csv", encoding="utf-8") as f:
 
 person1 = marlon brando
 person2 = john gielgud
-def main():
+source = person_id_for_name(person1)
+if source is None:
+    sys.exit("Person not found.")
+target = person_id_for_name(person2)
+if target is None:
+    sys.exit("Person not found.")
 
-    # Load data from files into memory
-    print("Loading data...")
-    load_data(directory)
-    print("Data loaded.")
-
-    source = person_id_for_name(person1)
-    if source is None:
-        sys.exit("Person not found.")
-    target = person_id_for_name(person2)
-    if target is None:
-        sys.exit("Person not found.")
 
 def person_id_for_name(name):
     """
@@ -103,54 +97,52 @@ def neighbors_for_person(person_id):
     return neighbors
 
 
-if __name__ == "__main__":
-    main()
 
 
 
 
-    # Crear el nodo inicial con el actor fuente
-    start = Node(state=source, parent=None, action=None)
-    # Inicializar la frontera con el nodo inicial
-    frontier = QueueFrontier()
-    frontier.add(start)
-    # Inicializar un conjunto para mantener un registro de los nodos explorados
-    explored = set()
-    # Iterar hasta que la frontera esté vacía
-    while not frontier.empty():
-        # Extraer un nodo de la frontera
-        node = frontier.remove()
-        # Si el nodo es el objetivo, reconstruir y devolver el camino
-        if node.state == target:
-            path = []
-            while node.parent is not None:
-                path.append((node.action, node.state))
-                node = node.parent
-            path.reverse()
-            return path
+# Crear el nodo inicial con el actor fuente
+start = Node(state=source, parent=None, action=None)
+# Inicializar la frontera con el nodo inicial
+frontier = QueueFrontier()
+frontier.add(start)
+# Inicializar un conjunto para mantener un registro de los nodos explorados
+explored = set()
+# Iterar hasta que la frontera esté vacía
+while not frontier.empty():
+    # Extraer un nodo de la frontera
+    node = frontier.remove()
+    # Si el nodo es el objetivo, reconstruir y devolver el camino
+    if node.state == target:
+        path = []
+        while node.parent is not None:
+            path.append((node.action, node.state))
+            node = node.parent
+        path.reverse()
+        return path
 
-        # Agregar el nodo al conjunto de nodos explorados
-        explored.add(node.state)
-        # Obtener los vecinos del nodo actual
-        neighbors = neighbors_for_person(node.state)
-        # Agregar vecinos no explorados a la frontera
-        for movie_id, neighbor_person_id in neighbors:
-            if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
-                child = Node(state=neighbor_person_id, parent=node, action=movie_id)
-                frontier.add(child)
+    # Agregar el nodo al conjunto de nodos explorados
+    explored.add(node.state)
+    # Obtener los vecinos del nodo actual
+    neighbors = neighbors_for_person(node.state)
+    # Agregar vecinos no explorados a la frontera
+    for movie_id, neighbor_person_id in neighbors:
+        if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
+            child = Node(state=neighbor_person_id, parent=node, action=movie_id)
+            frontier.add(child)
 
     # Si no se encuentra ningún camino posible
     return None
 
 if path is None:
-    print("Not connected.")
+print("Not connected.")
 else:
-    degrees = len(path)
-    print(f"{degrees} degrees of separation.")
-    path = [(None, source)] + path
-    for i in range(degrees):
-        person1 = people[path[i][1]]["name"]
-        person2 = people[path[i + 1][1]]["name"]
-        movie = movies[path[i + 1][0]]["title"]
-        print(f"{i + 1}: {person1} and {person2} starred in {movie}")
+degrees = len(path)
+print(f"{degrees} degrees of separation.")
+path = [(None, source)] + path
+for i in range(degrees):
+    person1 = people[path[i][1]]["name"]
+    person2 = people[path[i + 1][1]]["name"]
+    movie = movies[path[i + 1][0]]["title"]
+    print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
