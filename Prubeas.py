@@ -84,52 +84,6 @@ def main():
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
 
-import random
-
-def shortest_path(source, target):
-    """
-    Returns one of the shortest lists of (movie_id, person_id) pairs
-    that connect the source to the target.
-
-    If no possible path, returns None.
-    """
-    # Crear el nodo inicial con el actor fuente
-    start = Node(state=source, parent=None, action=None)
-    # Inicializar la frontera con el nodo inicial
-    frontier = QueueFrontier()
-    frontier.add(start)
-    # Inicializar un conjunto para mantener un registro de los nodos explorados
-    explored = set()
-    # Inicializar una lista para almacenar los caminos de longitud mínima
-    shortest_paths = []
-    # Iterar hasta que la frontera esté vacía
-    while not frontier.empty():
-        # Extraer un nodo de la frontera
-        node = frontier.remove()
-        # Si el nodo es el objetivo, reconstruir el camino y agregarlo a la lista de caminos mínimos
-        if node.state == target:
-            path = []
-            while node.parent is not None:
-                path.append((node.action, node.state))
-                node = node.parent
-            path.reverse()
-            shortest_paths.append(path)
-        # Agregar el nodo al conjunto de nodos explorados
-        explored.add(node.state)
-        # Obtener los vecinos del nodo actual
-        neighbors = neighbors_for_person(node.state)
-        # Agregar vecinos no explorados a la frontera
-        for movie_id, neighbor_person_id in neighbors:
-            if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
-                child = Node(state=neighbor_person_id, parent=node, action=movie_id)
-                frontier.add(child)
-    # Si se encontraron caminos de longitud mínima, devolver uno de ellos al azar
-    if shortest_paths:
-        return random.choice(shortest_paths)
-    else:
-        # Si no se encuentra ningún camino posible
-        return None
-
 
 
 def person_id_for_name(name):
