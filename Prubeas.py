@@ -48,7 +48,7 @@ with open(f"{directory}/stars.csv", encoding="utf-8") as f:
             pass
 
 
-def neighbors_for_person(person_id):
+"def neighbors_for_person(person_id):
     """
     Returns (movie_id, person_id) pairs for people
     who starred with a given person.
@@ -58,7 +58,7 @@ def neighbors_for_person(person_id):
     for movie_id in movie_ids:
         for person_id in movies[movie_id]["stars"]:
             neighbors.add((movie_id, person_id))
-    return neighbors
+    return neighbors"
 
 print(neighbors_for_person("102"))
 
