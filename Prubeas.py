@@ -99,10 +99,13 @@ if target is None:
 # Crear el nodo inicial con el actor fuente
 start = Node(state=source, parent=None, action=None)
 # Inicializar la frontera con el nodo inicial
+frontier = QueueFrontier()
 frontier.add(start)
+print(frontier)
 # Inicializar un conjunto para mantener un registro de los nodos explorados
 explored = set()
 path = None
+print(explored)
 
 
 
