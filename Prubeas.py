@@ -48,6 +48,18 @@ with open(f"{directory}/stars.csv", encoding="utf-8") as f:
             pass
 
 
-
-print(names)
+def neighbors_for_person(person_id):
+    """
+    Returns (movie_id, person_id) pairs for people
+    who starred with a given person.
+    """
+    movie_ids = people[person_id]["movies"]
+    neighbors = set()
+    for movie_id in movie_ids:
+        for person_id in movies[movie_id]["stars"]:
+            neighbors.add((movie_id, person_id))
+    return neighbors
+xx ="tom cruise"
+pru = neighbors_for_person(xx)
+print(pru)
 
