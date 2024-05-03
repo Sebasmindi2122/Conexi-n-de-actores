@@ -11,7 +11,7 @@ people = {}
 
 # Maps movie_ids to a dictionary of: title, year, stars (a set of person_ids)
 movies = {}
-
+directory = "/home/ubuntu/Conexi-n-de-actores/small"
 
 def load_data(directory):
     """
