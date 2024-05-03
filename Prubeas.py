@@ -83,28 +83,30 @@ def main():
             movie = movies[path[i + 1][0]]["title"]
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
-def heuristic(person_id, target):
-    """
-    Heuristic function for A* search.
-    """
-    # Podrías implementar tu propia heurística aquí.
-    # Por ejemplo, podrías calcular la distancia entre las películas en las que ha trabajado el actor actual
-    # y el actor objetivo, y usar esto como una estimación de la distancia restante.
-    return 0
 
-def a_star_search(source, target):
+def shortest_path(source, target):
     """
-    A* search algorithm to find the shortest path between two actors.
+    Returns the shortest list of (movie_id, person_id) pairs
+    that connect the source to the target.
+
+    If no possible path, returns None.
     """
+    # Crear el nodo inicial con el actor fuente
     start = Node(state=source, parent=None, action=None)
-    frontier = PriorityQueue()  # Usar una cola de prioridad en lugar de una frontera simple
-    frontier.add(start, 0)  # Agregar el nodo inicial con una prioridad de 0
 
+    # Inicializar la frontera con el nodo inicial
+    frontier = StackFrontier()
+    frontier.add(start)
+
+    # Inicializar un conjunto para mantener un registro de los nodos explorados
     explored = set()
 
+    # Iterar hasta que la frontera esté vacía
     while not frontier.empty():
+        # Extraer un nodo de la frontera
         node = frontier.remove()
 
+        # Si el nodo es el objetivo, reconstruir y devolver el camino
         if node.state == target:
             path = []
             while node.parent is not None:
@@ -113,16 +115,19 @@ def a_star_search(source, target):
             path.reverse()
             return path
 
+        # Agregar el nodo al conjunto de nodos explorados
         explored.add(node.state)
 
+        # Obtener los vecinos del nodo actual
         neighbors = neighbors_for_person(node.state)
 
+        # Agregar vecinos no explorados a la frontera
         for movie_id, neighbor_person_id in neighbors:
-            if neighbor_person_id not in explored:
+            if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
                 child = Node(state=neighbor_person_id, parent=node, action=movie_id)
-                priority = len(path) + heuristic(neighbor_person_id, target)  # Calcular la prioridad usando la heurística
-                frontier.add(child, priority)
+                frontier.add(child)
 
+    # Si no se encuentra ningún camino posible
     return None
 
 
