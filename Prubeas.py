@@ -49,4 +49,4 @@ with open(f"{directory}/stars.csv", encoding="utf-8") as f:
 
 
 
-
+print(movies)
