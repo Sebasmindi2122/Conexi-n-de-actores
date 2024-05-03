@@ -105,37 +105,39 @@ explored = set()
 path = None
 
 # Iterar hasta que la frontera esté vacía
-while not frontier.empty():
-    # Obtener los primeros 5 elementos de la frontera para imprimir
-    frontier_content = [(node.action, node.state) for node in frontier.frontier[:5]]
+# Inicializar una lista para mantener los nodos en el mismo nivel
+current_level = [start]
 
-    # Imprimir el contenido de la frontera antes de extraer un nodo
-    print("Frontier before extraction:", frontier_content)
+while current_level:
+    next_level = []
 
-    node = frontier.remove()
+    for node in current_level:
+        # Extraer un nodo de la frontera
+        # node = frontier.remove()  # Esto ya no sería necesario
 
-    # Imprimir el nodo extraído de la frontera
-    print("Extracted node:", (node.action, node.state))
+        # Si el nodo es el objetivo, reconstruir y devolver el camino
+        if node.state == target:
+            path = []
+            while node.parent is not None:
+                path.append((node.action, node.state))
+                node = node.parent
+            path.reverse()
+            break  # Salir del bucle for
 
-    if node.state == target:
-        path = []
-        while node.parent is not None:
-            path.append((node.action, node.state))
-            node = node.parent
-        path.reverse()
-        break
+        # Agregar el nodo al conjunto de nodos explorados
+        explored.add(node.state)
 
-    explored.add(node.state)
+        # Obtener los vecinos del nodo actual
+        neighbors = neighbors_for_person(node.state)
 
-    neighbors = neighbors_for_person(node.state)
+        # Agregar vecinos no explorados a la siguiente lista de nivel
+        for movie_id, neighbor_person_id in neighbors:
+            if neighbor_person_id not in explored:
+                child = Node(state=neighbor_person_id, parent=node, action=movie_id)
+                next_level.append(child)
 
-    for movie_id, neighbor_person_id in neighbors:
-        if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
-            child = Node(state=neighbor_person_id, parent=node, action=movie_id)
-            frontier.add(child)
-
-    # Imprimir el contenido de la frontera después de agregar nuevos nodos
-    print("Frontier after adding new nodes:", [(node.action, node.state) for node in frontier.frontier[:5]])
+    # Ahora que hemos revisado todos los nodos en el nivel actual, avanzamos al siguiente nivel
+    current_level = next_level
 
 # Si no se encuentra ningún camino posible
 if path is None:
