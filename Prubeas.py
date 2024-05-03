@@ -106,8 +106,11 @@ path = None
 
 # Iterar hasta que la frontera esté vacía
 while not frontier.empty():
+    # Obtener los primeros 5 elementos de la frontera para imprimir
+    frontier_content = [(node.action, node.state) for node in frontier.frontier[:5]]
+
     # Imprimir el contenido de la frontera antes de extraer un nodo
-    print("Frontier before extraction:", [(node.action, node.state) for node in frontier.frontier])
+    print("Frontier before extraction:", frontier_content)
 
     node = frontier.remove()
 
@@ -132,7 +135,7 @@ while not frontier.empty():
             frontier.add(child)
 
     # Imprimir el contenido de la frontera después de agregar nuevos nodos
-    print("Frontier after adding new nodes:", [(node.action, node.state) for node in frontier.frontier])
+    print("Frontier after adding new nodes:", [(node.action, node.state) for node in frontier.frontier[:5]])
 
 # Si no se encuentra ningún camino posible
 if path is None:
