@@ -98,15 +98,15 @@ if target is None:
 
 # Crear el nodo inicial con el actor fuente
 start = Node(state=source, parent=None, action=None)
-
 # Inicializar la frontera con el nodo inicial
-frontier = QueueFrontier()
 frontier.add(start)
-
 # Inicializar un conjunto para mantener un registro de los nodos explorados
 explored = set()
 path = None
 
+
+
+"""
 # Iterar hasta que la frontera esté vacía
 while not frontier.empty():
     # Extraer un nodo de la frontera
@@ -145,3 +145,4 @@ else:
         person2 = people[path[i + 1][1]]["name"]
         movie = movies[path[i + 1][0]]["title"]
         print(f"{i + 1}: {person1} and {person2} starred in {movie}")
+"""
