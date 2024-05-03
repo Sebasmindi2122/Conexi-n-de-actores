@@ -101,36 +101,38 @@ start = Node(state=source, parent=None, action=None)
 # Inicializar la frontera con el nodo inicial
 frontier = QueueFrontier()
 frontier.add(start)
-# Inicializar un conjunto para mantener un registro de los nodos explorados
 explored = set()
 path = None
 
-
 # Iterar hasta que la frontera esté vacía
 while not frontier.empty():
-    # Extraer un nodo de la frontera
+    # Imprimir el contenido de la frontera antes de extraer un nodo
+    print("Frontier before extraction:", [(node.action, node.state) for node in frontier.frontier])
+
     node = frontier.remove()
 
-    # Si el nodo es el objetivo, reconstruir y devolver el camino
+    # Imprimir el nodo extraído de la frontera
+    print("Extracted node:", (node.action, node.state))
+
     if node.state == target:
         path = []
         while node.parent is not None:
             path.append((node.action, node.state))
             node = node.parent
         path.reverse()
-        break  # Salir del bucle mientras
+        break
 
-    # Agregar el nodo al conjunto de nodos explorados
     explored.add(node.state)
 
-    # Obtener los vecinos del nodo actual
     neighbors = neighbors_for_person(node.state)
 
-    # Agregar vecinos no explorados a la frontera
     for movie_id, neighbor_person_id in neighbors:
         if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
             child = Node(state=neighbor_person_id, parent=node, action=movie_id)
             frontier.add(child)
+
+    # Imprimir el contenido de la frontera después de agregar nuevos nodos
+    print("Frontier after adding new nodes:", [(node.action, node.state) for node in frontier.frontier])
 
 # Si no se encuentra ningún camino posible
 if path is None:
