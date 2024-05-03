@@ -112,10 +112,8 @@ def shortest_path(source, target):
 
         # Agregar el nodo al conjunto de nodos explorados
         explored.add(node.state)
-
         # Obtener los vecinos del nodo actual
         neighbors = neighbors_for_person(node.state)
-
         # Agregar vecinos no explorados a la frontera
         for movie_id, neighbor_person_id in neighbors:
             if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
