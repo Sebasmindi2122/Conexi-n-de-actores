@@ -60,5 +60,5 @@ with open(f"{directory}/stars.csv", encoding="utf-8") as f:
             neighbors.add((movie_id, person_id))
     return neighbors"
 
-print(neighbors_for_person("102"))
+print(peoples)
 
