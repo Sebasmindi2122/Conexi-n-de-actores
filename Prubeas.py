@@ -122,7 +122,7 @@ while not frontier.empty():
             path.append((node.action, node.state))
             node = node.parent
         path.reverse()
-        return path
+
 
     # Agregar el nodo al conjunto de nodos explorados
     explored.add(node.state)
@@ -140,14 +140,14 @@ while not frontier.empty():
 
 
 if path is None:
-print("Not connected.")
+    print("Not connected.")
 else:
-degrees = len(path)
-print(f"{degrees} degrees of separation.")
-path = [(None, source)] + path
-for i in range(degrees):
-    person1 = people[path[i][1]]["name"]
-    person2 = people[path[i + 1][1]]["name"]
-    movie = movies[path[i + 1][0]]["title"]
-    print(f"{i + 1}: {person1} and {person2} starred in {movie}")
+    degrees = len(path)
+    print(f"{degrees} degrees of separation.")
+    path = [(None, source)] + path
+    for i in range(degrees):
+        person1 = people[path[i][1]]["name"]
+        person2 = people[path[i + 1][1]]["name"]
+        movie = movies[path[i + 1][0]]["title"]
+        print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
