@@ -48,8 +48,8 @@ with open(f"{directory}/stars.csv", encoding="utf-8") as f:
         except KeyError:
             pass
 
-person1 = marlon brando
-person2 = john gielgud
+person1 = "marlon brando"
+person2 = "john gielgud"
 source = person_id_for_name(person1)
 if source is None:
     sys.exit("Person not found.")
