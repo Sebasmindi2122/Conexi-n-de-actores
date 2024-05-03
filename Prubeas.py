@@ -59,7 +59,6 @@ def neighbors_for_person(person_id):
         for person_id in movies[movie_id]["stars"]:
             neighbors.add((movie_id, person_id))
     return neighbors
-xx ="Tom Cruise"
-pru = neighbors_for_person(xx)
-print(pru)
+
+print(neighbors_for_person("102"))
 
