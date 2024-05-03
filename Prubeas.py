@@ -48,7 +48,8 @@ with open(f"{directory}/stars.csv", encoding="utf-8") as f:
         except KeyError:
             pass
 
-
+person1 = marlon brando
+person2 = john gielgud
 def main():
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
@@ -59,10 +60,10 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    source = person_id_for_name(input("Name: "))
+    source = person_id_for_name(person1)
     if source is None:
         sys.exit("Person not found.")
-    target = person_id_for_name(input("Name: "))
+    target = person_id_for_name(person2)
     if target is None:
         sys.exit("Person not found.")
 
