@@ -100,18 +100,21 @@ def neighbors_for_person(person_id):
 
 
 
-
 # Crear el nodo inicial con el actor fuente
 start = Node(state=source, parent=None, action=None)
+
 # Inicializar la frontera con el nodo inicial
 frontier = QueueFrontier()
 frontier.add(start)
+
 # Inicializar un conjunto para mantener un registro de los nodos explorados
 explored = set()
+path = 0
 # Iterar hasta que la frontera esté vacía
 while not frontier.empty():
     # Extraer un nodo de la frontera
     node = frontier.remove()
+
     # Si el nodo es el objetivo, reconstruir y devolver el camino
     if node.state == target:
         path = []
@@ -123,16 +126,18 @@ while not frontier.empty():
 
     # Agregar el nodo al conjunto de nodos explorados
     explored.add(node.state)
+
     # Obtener los vecinos del nodo actual
     neighbors = neighbors_for_person(node.state)
+
     # Agregar vecinos no explorados a la frontera
     for movie_id, neighbor_person_id in neighbors:
         if not frontier.contains_state(neighbor_person_id) and neighbor_person_id not in explored:
             child = Node(state=neighbor_person_id, parent=node, action=movie_id)
             frontier.add(child)
 
-    # Si no se encuentra ningún camino posible
-    return None
+# Si no se encuentra ningún camino posible
+
 
 if path is None:
 print("Not connected.")
