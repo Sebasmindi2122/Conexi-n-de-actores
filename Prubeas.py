@@ -36,6 +36,7 @@ with open(f"{directory}/movies.csv", encoding="utf-8") as f:
             "stars": set()
         }
 
+
 # Load stars
 with open(f"{directory}/stars.csv", encoding="utf-8") as f:
     reader = csv.DictReader(f)
